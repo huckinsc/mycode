@@ -6,13 +6,13 @@ def main():
     game_round = 1
     player_score = 0
     target_number = randint(1,100)
-    while game_round <= 5:
+    while game_round <= 7:
         display_stats(game_round,player_score)
         player_guess = get_player_guess()
         player_score += calculate_round_score(player_guess,target_number,game_round)
         if target_number == player_guess:
             print("You guessed the number")
-            game_round = 5
+            game_round = 7
         elif player_guess < target_number:
             print("Your guess is low")
         else:
@@ -50,12 +50,14 @@ def calculate_round_score(guess,target,g_round):
             points = 3000
         elif g_round == 4:
             points = 2000
+        else:
+            points = 1000
     else:
         dif = abs(target - guess)
         if dif <= 15:
-            points = ((dif * 2) + 30)  * (6 - g_round)
+            points = ((dif * 2) + 30)  * (8 - g_round)
         elif dif <= 30:
-            points = dif * (6 - g_round)
+            points = dif * (8 - g_round)
         elif dif <= 50:
             points = round(dif / 2)
     return points
