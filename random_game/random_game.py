@@ -53,9 +53,9 @@ def calculate_round_score(guess,target,g_round):
     else:
         dif = abs(target - guess)
         if dif <= 15:
-            points = ((dif * 2) + 30)  * g_round
+            points = ((dif * 2) + 30)  * (6 - g_round)
         elif dif <= 30:
-            points = dif * g_round
+            points = dif * (6 - g_round)
         elif dif <= 50:
             points = round(dif / 2)
     return points
@@ -71,5 +71,6 @@ def display_end_game(score, target):
         print("You can do better.")
     else:
         print ("Did you even try...?")
+    print(f"Your final score is {score}")
 
 main()
