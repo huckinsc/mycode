@@ -84,9 +84,9 @@ def division():
             result = i_num1 // i_num2
             remainder = i_num1 % i_num2
             print(f"{i_num1} / {i_num2} = {result}r{remainder}")
-        else:
-            result = num1 / num2
-            print(f"{num1} / {num2} = {result}")
+       # else:
+        result = num1 / num2
+        print(f"{num1} / {num2} = {result}")
     else:
         print("To infinity and beyond...\nCannot divide by zero.")
     input("Press enter to continue.")
