@@ -5,7 +5,7 @@ rooms = {
                   'description' : 'This is the hall',
                   'south' : 'Kitchen',
                   'east'  : 'Dining Room',
-                  'item'  : 'key'
+                  'item'  : 'key' 
                 },
 
             'Kitchen' : {

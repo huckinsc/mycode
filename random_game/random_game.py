@@ -48,10 +48,8 @@ def calculate_round_score(guess,target,g_round):
             points = 4000
         elif g_round == 3:
             points = 3000
-        elif g_round == 4:
-            points = 2000
         else:
-            points = 1000
+            points = 500
     else:
         dif = abs(target - guess)
         if dif <= 15:

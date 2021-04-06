@@ -5,6 +5,7 @@
 from locations import rooms
 from verbs import travel_verbs, get_verbs, use_verbs, look_verbs
 from clearScreen import clear
+from items import items_list
 
 def showInstructions():
   #print a main menu and the commands
@@ -83,7 +84,16 @@ while True:
       #tell them they can't get it
       print('Can\'t get ' + move[1] + '!')
       display_message = 'Can\'t get ' + move[1] + '!'
-      
+  if move[0] in look_verbs:
+      if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
+          display_message = items_list[move[1]]['room_description']
+      elif move[1] in inventory:
+          display_message = items_list[move[1]]['inventory_description']
+  if move[0] in use_verbs:
+      if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
+          display_message = items_list[move[1]]['room_function']()
+      elif move[1] in inventory:
+          display_message = items_list[move[1]]['inventory_function']()
   ## Define how a player can win
   if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
     print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')

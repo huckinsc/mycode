@@ -1,7 +1,15 @@
-# A dictionary of items
+def use_key_room(): 
+    return "This item cannot be used from here."   
+
+def use_key_inv():
+    return "There is no lock to use the key on." 
+
+
 items_list = {
             'key' : {
                 'room_description' : 'The key is on the table.',
-                'inventory_description' : 'The key is gold in color'
+                'inventory_description' : 'The key is gold in color',
+                'room_function' : use_key_room,
+                'inventory_function' : use_key_inv
                 }
             }

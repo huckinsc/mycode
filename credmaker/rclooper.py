@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+""" doc string """
 import csv
 
 f = open("csv_users.txt", "r")
@@ -18,4 +18,3 @@ for row in csv.reader(f):
     print("export OS_USER_DOMAIN_NAME=" + row[4], file=rcfile)
     print("export OS_PASSWORD=" + row[5], file=rcfile)
     rcfile.close()
-
