@@ -1,7 +1,7 @@
-def use_key_room(): 
+def use_key_room(inv,room): 
     return "This item cannot be used from here."   
 
-def use_key_inv():
+def use_key_inv(inv,room):
     return "There is no lock to use the key on." 
 
 

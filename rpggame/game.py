@@ -1,105 +1,93 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
-# Replace RPG starter project with this code when new instructions are live
+''' RPG Game '''
 
 from locations import rooms
-from verbs import travel_verbs, get_verbs, use_verbs, look_verbs
+from verbs import travel_verbs,get_verbs,use_verbs,look_verbs
 from clearScreen import clear
 from items import items_list
 
 def showInstructions():
-  #print a main menu and the commands
-  print('''
-RPG Game
-========
-Commands:
-  go [direction]
-  get [item]
+    ''' Display instructions '''
+    print ('''
+How to Play
+===========
+Movement: Type a move verb like "go" followed by a direction.
+- go east
+Collecting Items: Type a get verb like "get" followed by the item name.
+- get key
+Examining Items: Tytpe a look verb followed by the item name.
+-  look key
+Using Items: Typ:e a use verb followed by by the item name.
+- use key
 ''')
+    input("Press 'Enter' to continue")
 
-  
-def showStatus(msg):
-  #print the player's current status
-  print('---------------------------')
-  print('You are in the ' + currentRoom)
-  print(rooms[currentRoom]['description'])
-  #print the current inventory
-  print('Inventory : ' + str(inventory))
-  #print an item if there is one
-  if "item" in rooms[currentRoom]:
-    print('You see a ' + rooms[currentRoom]['item'])
-  print("---------------------------")
-  if msg is not None:
-      print(msg)
-      
-#an inventory, which is initially empty
+def showStatus(msg):  
+    ''' print the player's current status '''
+    print('---------------------------')
+    print(rooms[currentRoom]['description'])
+    print(rooms[currentRoom]['description'])
+    print('Inventory : ' + str(inventory))
+    if "item" in rooms[currentRoom]:
+        print('You see a ' + rooms[currentRoom]['item'])
+    print("---------------------------")
+    if msg is not None:
+        print(msg)
+
+def processTurn(inventory,display_message,currentRoom):
+    ''' Process player turn '''
+    move = ''
+    while move == '':
+        move = input('>')
+    # parse player input into verb and noun
+    move = move.lower().split(" ", 1)
+    if move[0] in travel_verbs:
+        if move[1] in rooms[currentRoom]:
+            currentRoom = rooms[currentRoom][move[1]]
+        else:
+            display_message = 'You can\'t go that way!'
+    if move[0] in get_verbs:
+        if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
+            inventory += [move[1]]
+            display_message = move[1] + ' got!'
+            del rooms[currentRoom]['item']
+        else:
+            display_message = 'Can\'t get ' + move[1] + '!'
+    if move[0] in look_verbs:
+        if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
+            display_message = items_list[move[1]]['room_description']
+        elif move[1] in inventory:
+            display_message = items_list[move[1]]['inventory_description']
+    if move[0] in use_verbs:
+        if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
+            display_message = items_list[move[1]]['room_function'](inventory,currentRoom)
+        elif move[1] in inventory:
+            display_message = items_list[move[1]]['inventory_function'](inventory,currentRoom)
+    if move[0] == "help":
+        showInstructions()
+
+    #Determine win/loose conditions
+    if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
+        print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
+        return True,inventory,display_message,currentRoom
+    elif 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
+        print('A monster has got you... GAME OVER!')
+        return True,inventory,display_message,currentRoom
+    return False,inventory,display_message,currentRoom
+
+#Player inventory
 inventory = []
-#a message containter to hold a message to the player
-display_message = None
-#start the player in the Hall
+#Turn message
+display_message = "Type 'help' to see instructions."
+#Player's room. 
 currentRoom = 'Hall'
 
-showInstructions()
+game_over = False
 
-#loop forever
-while True:
-  clear()
-  showStatus(display_message)
-  display_message = None  
-  #get the player's next 'move'
-  #.split() breaks it up into an list array
-  #eg typing 'go east' would give the list:
-  #['go','east']
-  move = ''
-  while move == '':
-    move = input('>')
+while not game_over:
+    clear()
+    showStatus(display_message)
+    display_message = ""
+    game_over,inventory,display_message,currentRoom = processTurn(inventory,display_message,currentRoom)
 
-  # split allows an items to have a space on them
-  # get golden key is returned ["get", "golden key"]          
-  move = move.lower().split(" ", 1)
-
-  #if they type 'go' first
-  if move[0] in travel_verbs:
-    #check that they are allowed wherever they want to go
-    if move[1] in rooms[currentRoom]:
-      #set the current room to the new room
-      currentRoom = rooms[currentRoom][move[1]]
-    #there is no door (link) to the new room
-    else:
-        #print('You can\'t go that way!')
-        display_message = 'You can\'t go that way!'
-  #if they type 'get' first
-  if move[0] in get_verbs:
-    #if the room contains an item, and the item is the one they want to get
-    if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-      #add the item to their inventory
-      inventory += [move[1]]
-      #display a helpful message
-      #print(move[1] + ' got!')
-      display_message = move[1] + ' got!'
-      #delete the item from the room
-      del rooms[currentRoom]['item']
-    #otherwise, if the item isn't there to get
-    else:
-      #tell them they can't get it
-      print('Can\'t get ' + move[1] + '!')
-      display_message = 'Can\'t get ' + move[1] + '!'
-  if move[0] in look_verbs:
-      if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-          display_message = items_list[move[1]]['room_description']
-      elif move[1] in inventory:
-          display_message = items_list[move[1]]['inventory_description']
-  if move[0] in use_verbs:
-      if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-          display_message = items_list[move[1]]['room_function']()
-      elif move[1] in inventory:
-          display_message = items_list[move[1]]['inventory_function']()
-  ## Define how a player can win
-  if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
-    print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
-    break
-
-  ## If a player enters a room with a monster
-  elif 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-    print('A monster has got you... GAME OVER!')
-    break
