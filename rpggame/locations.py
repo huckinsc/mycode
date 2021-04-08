@@ -2,10 +2,10 @@
 rooms = {
 
             'Hall' : {
-                  'description' : 'This is the hall',
+                  'description' : 'HAll\nNot much to say here.\nThere is a locked door to the north.\nYou hear sounds from the south.\nThere is a door to the east.',
                   'south' : 'Kitchen',
                   'east'  : 'Dining Room',
-                  'item'  : 'key' 
+                  'west'  : 'Bathroom', 
                 },
 
             'Kitchen' : {
@@ -14,13 +14,18 @@ rooms = {
                   'item'  : 'monster',
                 },
             'Dining Room' : {
-                  'description' : 'This is the dinning room',
+                  'description' : 'Dining Room\nA large table with several dirty plates of rotting food\nsits in the middleof the room.\nThere are doors to the west and south.',
                   'west' : 'Hall',
                   'south': 'Garden',
-                  'item' : 'potion'
+                  'item' : 'key'
                },
             'Garden' : {
-                  'description' : 'This is the garden',
-                  'north' : 'Dining Room'
-            }
+                  'description' : 'Garden\nThere are potted plants scattered around.',
+                  'north' : 'Dining Room',
+                  'item'  : 'potion'
+            },
+            'Bathroom' : {
+                  'description' : 'Bathroom\nThere is a bathtub full of ice.\nYou notice that there is a fresh insision\nwhere your left kindney used to be\nThere is a door to the east',
+                  'east'  : 'Hall' 
+                }
          }

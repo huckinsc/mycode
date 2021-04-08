@@ -27,7 +27,6 @@ def showStatus(msg):
     ''' print the player's current status '''
     print('---------------------------')
     print(rooms[currentRoom]['description'])
-    print(rooms[currentRoom]['description'])
     print('Inventory : ' + str(inventory))
     if "item" in rooms[currentRoom]:
         print('You see a ' + rooms[currentRoom]['item'])
