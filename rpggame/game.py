@@ -60,9 +60,9 @@ def processTurn(inventory,display_message,currentRoom):
             display_message = items_list[move[1]]['inventory_description']
     if move[0] in use_verbs:
         if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-            display_message = items_list[move[1]]['room_function'](inventory,currentRoom)
+            display_message = items_list[move[1]]['room_function'](inventory,currentRoom,rooms)
         elif move[1] in inventory:
-            display_message = items_list[move[1]]['inventory_function'](inventory,currentRoom)
+            display_message = items_list[move[1]]['inventory_function'](inventory,currentRoom,rooms)
     if move[0] == "help":
         showInstructions()
 
@@ -80,7 +80,7 @@ inventory = []
 #Turn message
 display_message = "Type 'help' to see instructions."
 #Player's room. 
-currentRoom = 'Hall'
+currentRoom = 'Bathroom'
 
 game_over = False
 

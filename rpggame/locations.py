@@ -1,4 +1,4 @@
-## A dictionary linking a room to other rooms
+# A dictionary linking a room to other rooms
 rooms = {
 
             'Hall' : {
@@ -17,7 +17,7 @@ rooms = {
                   'description' : 'Dining Room\nA large table with several dirty plates of rotting food\nsits in the middleof the room.\nThere are doors to the west and south.',
                   'west' : 'Hall',
                   'south': 'Garden',
-                  'item' : 'key'
+                  'item' : 'jello mold'
                },
             'Garden' : {
                   'description' : 'Garden\nThere are potted plants scattered around.',
@@ -27,5 +27,9 @@ rooms = {
             'Bathroom' : {
                   'description' : 'Bathroom\nThere is a bathtub full of ice.\nYou notice that there is a fresh insision\nwhere your left kindney used to be\nThere is a door to the east',
                   'east'  : 'Hall' 
+                },
+            'Porch' : {
+                    'description' : 'Porch\nYou are the front porch.\nThe way out is blocked by razor wire.',
+                    'south' : 'Hall'
                 }
          }
